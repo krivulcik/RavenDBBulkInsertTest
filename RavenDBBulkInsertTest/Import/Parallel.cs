@@ -13,7 +13,7 @@ namespace RavenDBBulkInsertTest.Import
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public static void ImportInParallel(string hostname, string databaseName, int batches, int countPerBatch)
+        public static void ImportInParallel(string hostname, string databaseName, string ident, int batches, int countPerBatch)
         {
             _logger.Info("Start.");
             var sw = Stopwatch.StartNew();
@@ -21,7 +21,7 @@ namespace RavenDBBulkInsertTest.Import
                 .ToDictionary(
                     x => x.ToString(),
                     x => Enumerable.Range(0, countPerBatch)
-                        .Select(i => new Employee { Id = "employee/" + x.ToString() + "-" + i.ToString(), FirstName = i.ToString(), LastName = i.ToString() })
+                        .Select(i => new Employee { Id = "employee/" + ident + "-" + x.ToString() + "-" + i.ToString(), FirstName = i.ToString(), LastName = i.ToString() })
                         .ToArray());
             _logger.Info($"Data prepared in {sw.ElapsedMilliseconds} ms.");
 
